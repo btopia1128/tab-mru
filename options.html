@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Tab MRU Toggle — 設定</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      font-size: 14px;
+      color: #1f2328;
+      margin: 0;
+      padding: 20px 24px;
+      min-width: 340px;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { color: #e6e6e6; background: #202124; }
+      input { background: #303134; color: #e6e6e6; border-color: #5f6368; }
+    }
+    h1 { font-size: 15px; margin: 0 0 16px; }
+    label { display: flex; align-items: center; gap: 8px; }
+    input[type="number"] {
+      width: 64px;
+      padding: 4px 6px;
+      font-size: 14px;
+      border: 1px solid #c9ccd1;
+      border-radius: 6px;
+    }
+    .note { color: #6a737d; font-size: 12px; margin-top: 12px; line-height: 1.6; }
+    @media (prefers-color-scheme: dark) { .note { color: #9aa0a6; } }
+    #status {
+      margin-left: 8px;
+      font-size: 12px;
+      color: #2f5fd0;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    #status.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <h1>💤 放置タブのマーク</h1>
+  <label>
+    最後に開いてから
+    <input type="number" id="staleDays" min="1" max="365" step="1">
+    日以上経ったタブにマークを付ける
+    <span id="status">保存しました</span>
+  </label>
+  <p class="note">
+    変更はすぐに反映され、条件を満たさなくなったタブの 💤 は自動で外れます。<br>
+    休止中（メモリセーバー）のタブと chrome:// ページにはマークを付けられません。
+  </p>
+  <script src="options.js"></script>
+</body>
+</html>

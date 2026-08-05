@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Tab MRU Toggle",
+  "version": "0.3.0",
+  "description": "縦タブの並びを「元の順」と「最後に触った順（MRU）」でワンタッチ切り替え。1週間放置したタブには💤マーク",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["tabs", "tabGroups", "storage", "scripting", "alarms"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "action": {
+    "default_title": "元の順 — クリックでMRU順（最後に触った順）に切り替え",
+    "default_icon": {
+      "16": "icons/toolbar16.png",
+      "32": "icons/toolbar32.png"
+    }
+  },
+  "commands": {
+    "toggle-mru": {
+      "suggested_key": {
+        "default": "Alt+M"
+      },
+      "description": "MRUモードの切り替え"
+    }
+  }
+}
