@@ -1,8 +1,21 @@
 # Tab MRU Toggle
 
-縦タブ（vertical sidebar）の並びを「元の順」と「最後に触った順（MRU）」でワンタッチ切り替えするChrome拡張のプロトタイプ。おまけで、1週間以上触っていないタブのタイトルに 💤 マークを付け、同じタイトルのタブが複数あるときは URL の違う部分を `[ラベル]` として付けて区別できるようにする。さらに localhost などローカル環境のタブには 🟢 を付けて、本番環境のタブと見分けられるようにする。
+> Chrome extension that toggles tab order between the original order and most-recently-used (MRU) order — designed for Chrome's vertical tabs. It also marks stale tabs with 💤, disambiguates same-titled tabs with a `[label]` taken from the URL, and marks local-environment tabs (localhost etc.) with 🟢. Requires Chrome 121+. Docs below are in Japanese.
+
+Chrome の縦タブ（vertical sidebar）向けのタブ整理拡張です。主な機能:
+
+- **MRU切り替え**: タブの並びを「元の順」と「最後に触った順（MRU）」でワンタッチ切り替え
+- **💤 放置タブ**: 一定日数（デフォルト7日）触っていないタブのタイトルに 💤 を付け、まとめて閉じることもできる
+- **`[ラベル]` 同名タブの区別**: 同じタイトルのタブが複数あると、URL の違う部分をタイトル先頭に付ける
+- **🟢 ローカル環境タブ**: localhost などのタブに 🟢 を付け、本番環境のタブと見分けられるようにする
+
+![元の順とMRUモードの並び、💤・🟢・[ラベル] の付き方の例](docs/overview.svg)
 
 Chromeの縦タブはタブ順序をそのまま縦に表示しているだけなので、`chrome.tabs.move` で順序を切り替えれば縦タブにもそのまま反映される（拡張独自のUIは不要）。
+
+## 動作環境
+
+- Chrome 121 以降（タブの最終アクセス時刻 `tab.lastAccessed` を使うため）
 
 ## 使い方
 
@@ -69,13 +82,17 @@ Chromeの縦タブはタブ順序をそのまま縦に表示しているだけ�
 
 権限は `tabs` / `tabGroups` / `storage` / `scripting` / `alarms` / `contextMenus` と全サイトへのホスト権限。ホスト権限は 💤 マーク・`[ラベル]`・🟢 のタイトル書き換え（`document.title` の変更）だけに使い、ページの閲覧内容は読み取らない（ラベルと 🟢 の判定は URL のみから行う）。
 
-## 既知の制限（プロトタイプ）
+## 既知の制限
 
 - スナップショットは `storage.session` 保持のため、**Chrome再起動でMRUモードは解除扱い**になる（再起動後は元に戻せない。順序はChromeが最後の状態を復元するのでMRU並びのまま残る）
 - MRUモード中に新しく作ったウィンドウはスナップショットがないため、OFF時はそのままの並びで残る
 - ピン留めタブは常に対象外
 - 復元されるグループは「作り直し」なので、グループIDに依存する他拡張とは相性が悪い可能性あり
 - 💤 マークは content script 方式のため、`chrome://` 等の保護ページと**メモリセーバーで休止中（discarded）のタブには付けられない**（放置タブほど休止されやすいのが弱点）。ページ自身がタイトルを書き換えるSPAでは一時的に消えることがあるが、次回チェックで再付与される
+
+## 変更履歴
+
+[CHANGELOG.md](CHANGELOG.md) を参照。
 
 ## ライセンス
 

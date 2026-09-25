@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif">
+  <rect width="760" height="380" rx="12" fill="#f6f7f9"/>
+
+  <!-- 左: 元の順 -->
+  <text x="40" y="44" font-size="15" font-weight="600" fill="#1f2328">元の順</text>
+  <text x="104" y="44" font-size="12" fill="#656d76">グループあり</text>
+  <rect x="32" y="60" width="316" height="290" rx="10" fill="#ffffff" stroke="#d0d7de"/>
+
+  <g font-size="13" fill="#1f2328">
+    <rect x="44" y="74" width="4" height="152" rx="2" fill="#1a73e8"/>
+    <text x="58" y="90" font-size="12" font-weight="600" fill="#1a73e8">仕事</text>
+    <text x="58" y="120">🟢 [localhost] MyApp - ダッシュボード</text>
+    <text x="58" y="152">[myapp.com] MyApp - ダッシュボード</text>
+    <text x="58" y="184">[issues] tab-mru · GitHub</text>
+    <text x="58" y="216">[pulls] tab-mru · GitHub</text>
+
+    <text x="58" y="258">💤 あとで読む記事</text>
+    <text x="58" y="290">Gmail</text>
+    <text x="58" y="322">カレンダー</text>
+  </g>
+
+  <!-- 矢印 -->
+  <g fill="#656d76">
+    <path d="M364 196 h26" stroke="#656d76" stroke-width="2"/>
+    <path d="M388 189 l10 7 l-10 7 z"/>
+    <text x="381" y="176" font-size="12" text-anchor="middle">⌥M</text>
+  </g>
+
+  <!-- 右: MRUモード -->
+  <text x="420" y="44" font-size="15" font-weight="600" fill="#1f2328">MRUモード</text>
+  <text x="508" y="44" font-size="12" fill="#656d76">最後に触った順</text>
+  <rect x="412" y="60" width="316" height="290" rx="10" fill="#ffffff" stroke="#d0d7de"/>
+
+  <g font-size="13" fill="#1f2328">
+    <rect x="424" y="104" width="292" height="26" rx="6" fill="#e8f0fe"/>
+    <text x="438" y="90" font-size="12" fill="#656d76">いま見ているタブが先頭へ</text>
+    <text x="438" y="122">🟢 [localhost] MyApp - ダッシュボード</text>
+    <text x="438" y="154">[pulls] tab-mru · GitHub</text>
+    <text x="438" y="186">Gmail</text>
+    <text x="438" y="218">[myapp.com] MyApp - ダッシュボード</text>
+    <text x="438" y="250">[issues] tab-mru · GitHub</text>
+    <text x="438" y="282">カレンダー</text>
+    <text x="438" y="314">💤 あとで読む記事</text>
+  </g>
+</svg>
