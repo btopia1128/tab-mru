@@ -82,9 +82,35 @@ async function withRetry(fn, tries = 25, delayMs = 100) {
 }
 
 chrome.action.onClicked.addListener(toggle);
-chrome.commands.onCommand.addListener((cmd) => {
+chrome.commands.onCommand.addListener((cmd, tab) => {
   if (cmd === 'toggle-mru') toggle();
+  else if (cmd === 'duplicate-tab') duplicateTab(tab);
+  else if (cmd === 'toggle-pin') togglePin(tab);
 });
+
+// アクティブタブを戻る/進むの履歴ごと複製する（タブ右クリック「複製」と同じ）。
+// 複製先はアクティブになるため、MRUモード中は onActivated で最上部へ移動する。
+async function duplicateTab(tab) {
+  tab ??= (await chrome.tabs.query({ active: true, lastFocusedWindow: true }))[0];
+  if (!tab) return;
+  try {
+    await chrome.tabs.duplicate(tab.id);
+  } catch (e) {
+    console.warn('[tab-mru] duplicate failed for tab', tab.id, e);
+  }
+}
+
+// アクティブタブのピン留めを切り替える（タブ右クリック「固定」と同じ）。
+// 解除したタブはピン留め領域の直後に来るので、MRUモード中もそのまま最上部になる。
+async function togglePin(tab) {
+  tab ??= (await chrome.tabs.query({ active: true, lastFocusedWindow: true }))[0];
+  if (!tab) return;
+  try {
+    await withRetry(() => chrome.tabs.update(tab.id, { pinned: !tab.pinned }));
+  } catch (e) {
+    console.warn('[tab-mru] pin toggle failed for tab', tab.id, e);
+  }
+}
 
 async function toggle() {
   if (busy) return;
@@ -711,6 +737,7 @@ chrome.tabs.onUpdated.addListener((_tabId, changeInfo) => {
   if (
     changeInfo.title !== undefined ||
     changeInfo.url !== undefined ||
+    changeInfo.pinned !== undefined || // ピン留めしたタブは[ラベル]の対象外になる
     changeInfo.status === 'complete'
   ) {
     scheduleTitleRefresh();
